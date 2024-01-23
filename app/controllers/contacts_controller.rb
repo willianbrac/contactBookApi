@@ -6,12 +6,12 @@ class ContactsController < ApplicationController
     @contacts = Contact.all
 
     # render json: @contacts, root: true, only: [:name, :email], methods: :author
-    render json: @contacts
+    render json: @contacts, include: [:kind, :phones]
   end
 
   # GET /contacts/1
   def show
-    render json: @contact.attributes.merge({ author: "Willian" })
+    render json: @contact, include: [:kind, :phone]
   end
 
   # POST /contacts
@@ -47,6 +47,6 @@ class ContactsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def contact_params
-      params.require(:contact).permit(:name, :email, :birthdate)
+      params.require(:contact).permit(:name, :email, :birthdate, :kind_id)
     end
 end

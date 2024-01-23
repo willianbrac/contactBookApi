@@ -29,5 +29,21 @@ namespace :dev do
 
     puts "Contatos cadastrados com sucesso!"
 
+    # Populate Phones
+    puts "Cadastrando telefones..."
+
+    # Itera cada contato e atribui uma quantidade aleatória de no máximo 5 telefones 
+    Contact.all.each do |contact|
+      Random.rand(5).times do |i|
+        # A partir do Rails 5 é obrigatório campos relacionados serem preenchidos
+        contact.phones.create!(
+          number:Faker::PhoneNumber.cell_phone
+        )
+        contact.save!
+      end
+    end
+
+    puts "Contatos telefones com sucesso!"
+
   end
 end

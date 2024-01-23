@@ -1,28 +1,39 @@
 class Contact < ApplicationRecord
 
     # Muito para um
-    belongs_to :kind
+    # Uma categoria pode ter muitos contatos
+    belongs_to :kind #, optional: true
 
-    def author
-        "John Doe"
-    end
+    # Um para muitos
+    # Um contato pode ter muitos telefones
+    has_many :phones
 
-    # v2
-    def kind_description
-        self.kind.description
-    end
-
+    # formatação da data de nascimento para o formato brasileiro
     def as_json(options={})
-        super(
-            root: true,
-            # v2
-            methods: [:author, :kind_description]
+        hash = super(options)
 
-            # v1
-            # methods: :author,
+        # Faz a formatação se a data de nascimento não estiver vazia
+        hash[:birthdate] = (I18n.l(self.birthdate) unless self.birthdate.blank?)
+        
+        hash
+    end
 
-            # v1 
-            # Atributos aninhados em JSON (nested attributes)
-            # include: { kind: { only: :description } }
-        )
+    # # v2
+    # def kind_description
+    #     self.kind.description
+    # end
+
+    # def as_json(options={})
+    #     super(
+    #         root: true,
+    #         # v2
+    #         methods: [:author, :kind_description]
+
+    #         # v1
+    #         # methods: :author,
+
+    #         # v1 
+    #         # Atributos aninhados em JSON (nested attributes)
+    #         # include: { kind: { only: :description } }
+    #     )
 end

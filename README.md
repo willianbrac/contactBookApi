@@ -45,3 +45,6 @@ rails s
 
 # Populate DB
 rails dev:setup (setup or other)
+
+# Install dependencies after add new gem
+bundle
