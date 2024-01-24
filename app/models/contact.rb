@@ -8,9 +8,16 @@ class Contact < ApplicationRecord
     # Um contato pode ter muitos telefones
     has_many :phones
 
+    # um para um
+    # Um contato pode ter um endereço
+    has_one :address
+
     # Atributos aninhados (nested attributes)
     # Cadastra os telefones aninhados com o contato
     accepts_nested_attributes_for :phones, allow_destroy: true
+
+    # Cadastra o endereço aninhado com o contato
+    accepts_nested_attributes_for :address, update_only: true
 
     # formatação da data de nascimento para o formato brasileiro
     def as_json(options={})
