@@ -2,11 +2,15 @@ class Contact < ApplicationRecord
 
     # Muito para um
     # Uma categoria pode ter muitos contatos
-    belongs_to :kind #, optional: true
+    belongs_to :kind
 
     # Um para muitos
     # Um contato pode ter muitos telefones
     has_many :phones
+
+    # Atributos aninhados (nested attributes)
+    # Cadastra os telefones aninhados com o contato
+    accepts_nested_attributes_for :phones, allow_destroy: true
 
     # formatação da data de nascimento para o formato brasileiro
     def as_json(options={})
